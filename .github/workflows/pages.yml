@@ -27,7 +27,7 @@ jobs:
         run: |
           rm -rf site
           mkdir site
-          unzip -q hamyar-site-v1.1.zip -d site
+          unzip -q hamyar-site-v2.1.0-rc1-final.zip -d site
           test -f site/index.html
 
       - name: تنظیم GitHub Pages
