@@ -23,28 +23,38 @@ jobs:
       - name: دریافت فایل‌های مخزن
         uses: actions/checkout@v6
 
-      - name: آماده‌سازی فایل‌های سایت
+      - name: بررسی و آماده‌سازی نسخه ۲.۱
+        shell: bash
         run: |
+          set -euo pipefail
+
+          test -f hamyar-site-v2.1.0-rc1-final.zip
+
           rm -rf site
-          mkdir site
+          mkdir -p site
+
           unzip -q hamyar-site-v2.1.0-rc1-final.zip -d site
+
           test -f site/index.html
+          test -f site/RELEASE_v2.1.0_RC1.txt
+
+          grep -Fqx "hamyar-karofanavari 2.1.0-rc1" site/RELEASE_v2.1.0_RC1.txt
 
       - name: تنظیم GitHub Pages
         uses: actions/configure-pages@v5
-       grep -q "hamyar-karofanavari 2.1.0-rc1" site/RELEASE_v2.1.0_RC1.txt
+
       - name: بارگذاری فایل‌های سایت
         uses: actions/upload-pages-artifact@v4
         with:
           path: ./site
 
   deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
-    runs-on: ubuntu-latest
-    needs: build
 
     steps:
       - name: انتشار سایت
