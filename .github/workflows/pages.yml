@@ -32,7 +32,7 @@ jobs:
 
       - name: تنظیم GitHub Pages
         uses: actions/configure-pages@v5
-
+       grep -q "hamyar-karofanavari 2.1.0-rc1" site/RELEASE_v2.1.0_RC1.txt
       - name: بارگذاری فایل‌های سایت
         uses: actions/upload-pages-artifact@v4
         with:
